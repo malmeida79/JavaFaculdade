@@ -1,0 +1,727 @@
+// Exemplo 01
+
+public class Peao extends PecaXadrez {   
+	public Peao() {   
+		this.setIcon(new ImageIcon("src/Damas/img/fundo.jpg"));   
+	}   
+}  
+
+// exemplo 02
+
+Quando você não define um construtor em uma classe, um construtor padrão que não recebe nenhum parâmetro é definido automaticamente. Entretanto, quando você define um ou mais construtores, tal construtor padrão sem parâmetros não é definido.
+
+O construtor padrão é algo do tipo:
+
+view plaincopy to clipboardprint?
+public class Father {   
+	public Father() { // gerado automaticamente quando não se define um construtor   
+		super(); // invoca o construtor da classe pai   
+	}   
+}   
+  
+public class Son extends Father {   
+	public Son() { // também gerado automaticamente   
+		super(); // invoca o construtor sem parâmetros da classe pai   
+	}   
+}   
+public class Father {
+	public Father() { // gerado automaticamente quando não se define um construtor
+		super(); // invoca o construtor da classe pai
+	}
+}
+
+public class Son extends Father {
+	public Son() { // também gerado automaticamente
+		super(); // invoca o construtor sem parâmetros da classe pai
+	}
+}
+
+
+	Todo construtor também tenta invocar o construtor sem parâmetros da classe pai, explícita ou implícitamente. Então, o que está acontecendo no seu caso é que a classe SaveAcc está tentando invocar um construtor sem parâmetros da classe Banco que não existe.
+
+	Para corrigir isso, você pode fazer uma das coisas abaixo:
+
+a) Criar um construtor sem parâmetros na classe Banco:
+
+view plaincopy to clipboardprint?
+
+	public class Banco() {   
+		public Banco() {}   
+		public Banco(double x) { ... }   
+	}   
+
+	public class Banco() {
+		public Banco() {}
+		public Banco(double x) { ... }
+	}
+
+
+b) Colocar a linha super(y); na primeira linha do construtor da classe SaveAcc:
+
+	view plaincopy to clipboardprint?
+
+	public class SaveAcc extends Banco {   
+		public SaveAcc(double y) {   
+			super(y); // invoca o construtor que recebe um double como parâmetro, na classe pai (banco)   
+			saldo = x;   
+		}   
+	  
+		private double saldo;   
+	}   
+
+	public class SaveAcc extends Banco {
+		public SaveAcc(double y) {
+			super(y); // invoca o construtor que recebe um double como parâmetro, na classe pai (banco)
+			saldo = x;
+		}
+
+		private double saldo;
+	}
+	 
+// exemplo 03
+
+ 1. Parametrizar os construtores
+
+Quando temos um caso onde os atributos são apenas modificados na criação do objeto, crie construtores para realizar esta tarefa. Isso reduz a quantidade de código associado a uma classe. Se você fico um pouco perdido com esta dica, tenha paciência, a medida que começar a programar vai ver explicitamente estas condições aparecerem tendo esta informação em mente vai pode realizar um trabalho melhor com a programação em OO. 
+
+
+2. Inicializando atributos e variáveis
+
+Sabemos que o Java inicializa as variáveis-membros de uma classe, porém devemos ficar atentos às variáveis locais que estão dentro de um método ou bloco de código. Devemos declarar estas variáveis de forma explicita nos seus respectivos blocos, métodos ou construtores, fazendo isso tornamos o código mais fácil de ser compreendido e não utilizamos facilidades especiais da máquina virtual Java. Um pequeno exemplo seria: 
+
+ 
+Public class Modelo {
+// atributos 
+private int a;
+public double b;
+String s;
+// construtor
+public Modelo() {
+a = 1;
+b = 1;
+s = new String("Me apresente!");
+}
+}  
+
+// exemplo 04
+
+Exercícios para APRENDIZAGEM
+
+ 
+
+Cálculo da Área de um Retângulo
+
+Exemplo 1 arearet: 
+
+import java.applet.Applet;
+
+import java.awt.*;
+
+import java.awt.event.*;
+
+ 
+
+public class arearet extends Applet implements ActionListener
+
+{
+
+ Label titulo, rotulo1, rotulo2;
+
+ TextField caixa1, caixa2, caixa3;
+
+ Button botao;
+
+ double b,h,area;
+
+ 
+
+ public void init()
+
+  {
+
+  titulo = new Label("Cálculo da Área de um Retângulo"); add(titulo);
+
+  rotulo1 = new Label("Base [cm]: ");  add(rotulo1);
+
+  caixa1 = new TextField("",5); add(caixa1);
+
+  rotulo2 = new Label("Altura [cm]: "); add(rotulo2);
+
+  caixa2 = new TextField("",5);  add(caixa2);
+
+  botao = new Button("Área [cm2]");  add(botao);  botao.addActionListener(this);
+
+  caixa3 = new TextField("   ",5);  add(caixa3);
+
+  }
+
+ 
+
+   public void actionPerformed(ActionEvent e)
+
+   {
+
+      if(e.getSource()==botao)        
+
+      { 
+
+             b=Double.valueOf(caixa1.getText()).doubleValue();
+
+             h=Double.valueOf(caixa2.getText()).doubleValue();
+
+             area=(b*h);
+
+             caixa3.setText(String.valueOf(area));
+
+      }
+
+   }
+
+}       
+
+ 
+
+
+ 
+
+Exemplo 2 - pessoa:
+
+import java.applet.Applet;
+
+import java.awt.*;
+
+import java.awt.event.*;
+
+ 
+
+/* <APPLET CODE=pessoa.class WIDTH=160 HEIGHT=200></APPLET> */
+
+ 
+
+public class pessoa extends Applet implements ActionListener
+
+{
+
+  public Label legenda1, legenda2;
+
+  public TextField text1,text2;
+
+  public Button botao;
+
+  public TextArea ta;
+
+  public String nome;
+
+  public int idade;
+
+ 
+
+  public void init( )
+
+  {
+
+    legenda1 = new Label ("Digite seu nome: "); add(legenda1);
+
+    text1 = new TextField(15); add(text1);
+
+    legenda2 = new Label ("Digite sua idade: "); add(legenda2);
+
+    text2 = new TextField(5);  add(text2);
+
+    botao = new Button ("Agora, clique aqui");
+
+    add(botao); botao.addActionListener(this);
+
+    ta = new TextArea(10,30);
+
+    add(ta);
+
+  }
+
+ 
+
+  public void actionPerformed(ActionEvent e)
+
+  {
+
+     nome=text1.getText();
+
+     idade=Integer.valueOf(text2.getText()).intValue();
+
+ 
+
+     if(e.getSource( ) == botao)
+
+     {
+
+       ta.append("Oi, meu nome é : " +nome+"\n");
+
+       ta.append("Eu tenho : " +idade+ " anos");
+
+     }
+
+  }
+
+}
+
+ 
+
+
+ 
+
+ 
+
+
+Aula 04: Métodos
+
+  
+
+ 4.1. Definição de métodos
+
+
+A definição dos métodos têm quatro partes básicas: 
+
+    O nome do método; 
+    O tipo objeto ou tipo primitivo de retorno; 
+    Uma lista de parâmetros; 
+    O corpo do método; 
+ 
+
+A definição básica de um método tem esta aparência:
+
+ 
+
+tipoderetorno nomedometodo (tipo arg1, tipo2 arg2, ...) {  ...  }
+
+ 
+
+Exemplo:
+
+ 
+
+class RangeClass 
+
+{
+
+            int [ ] makeRange (int lower, int upper) 
+
+            {
+
+                  int arr[ ] = new int [ (upper - lower) + 1];
+
+                  for (int i = 0; I < arr.length; i++)
+
+                  arr [i] = lower++; 
+
+      return arr;
+
+             }
+
+ 
+
+  public static void main (String arg[ ])
+
+  {
+
+         int theArray[ ];
+
+         RangeClass theRange = new RangeClass( );
+
+ 
+
+theArray = theRange. makeRange (1, 10) ; 
+
+System.out.print(?The array: [? ); 
+
+for ( int, I = 0; i < theArray.length; i++) System.out.print(theArray[i] + ? ?);
+
+          System.out.println(?]?);
+
+  }
+
+}
+
+ 
+
+À saída do programa é:
+
+The array: [ 1 2 3 4 5 6 7 8 9 10 ]
+
+ 
+
+Veja este aplicativo na forma de applet em duas versões:
+
+ 
+
+
+ 
+
+metodo1.java    metodo1.html                   metodo2.java    metodo2.html
+
+ 
+
+
+ Applets que exemplificam os conceitos colocados nos itens de numero 4.2 até 4.5:
+  
+    PesquisaAlimentos.java            PesquisaAlimentos.html
+
+       
+      Robot.java                                   Robot.html 
+ 
+ 
+
+ 
+
+
+ Applets que exemplificam os conceitos colocados nos itens de numero 4.2 até 4.5:
+    
+      
+     individuo.java                              individuo.html
+  
+    
+     mostralista.java                           mostralista.html
+  
+   
+      exemploThis.java                        exemploThis.html
+ 
+
+  
+
+ 
+
+ Applets que exemplificam os conceitos colocados nos itens de numero 4.2 até 4.5:
+    
+   PassByReference.java              PassByReference.html
+  
+   
+     PassagemDeValores.java        PassagemDeValores.html 
+ 
+ 
+
+ 
+
+ 
+
+4.2. A palavra-chave this
+
+
+No corpo de uma definição de método, você pode querer referir-se ao objeto corrente, o objeto que o método chamou para referir-se às variáveis de instância ou para passar o objeto corrente como um argumento para um outro método. Para este tipo de referência, você pode usar a palavra-chave this. 
+
+ 
+
+class Pessoa
+
+{ 
+
+   String nome; 
+
+   int idade;
+
+ 
+
+   Pessoa (String nome, int idade)
+
+   { 
+
+      this.nome = nome; 
+
+      this.idade = idade;
+
+   }
+
+ 
+
+  public void imprimeDados ( ) 
+
+  {
+
+     System.out.print (?Nome: ? + this.nome + ?Idade: ? + this.idade); 
+
+  }
+
+}
+
+ 
+
+4.3. Como passar argumentos para métodos
+
+ 
+
+class PassByReference
+{
+
+       <>int onetoZero( int arg[ ] ) 
+      { 
+                int count = 0; <>                  
+                   for(int i = 0; i< arg.length; i++) 
+                { 
+
+if (arg[i] = = 1) 
+            { 
+
+count++; 
+
+arg[i] = 0;
+
+                        }
+
+            }
+
+            return count;
+      }
+
+ 
+
+public static void main (String arg[ ])
+{
+
+int arr[ ] = { 1,3,4,5,1,1,7); 
+
+PassByReference test = new PassByReference( ); 
+
+int numOnes;
+
+ 
+
+System.out.print(?Values of the array: [?);
+
+for ( int i = 0; i < arr.length; i++) 
+           {
+
+                        System.out.print(arr[i] + ??);
+
+            }
+
+System.out.println(?]?);
+
+ 
+
+numOnes = test.onetoZero(arr);
+
+System.out.println (?Number of Ones = ? + numOnes);
+
+System.out.print (?New values of the array: [ ?);
+
+for (int i = 0; i < arr.length; i++) {
+
+                        System.out.print(arr[i] + ? ?);
+
+}
+
+System.out.println(?]?);
+
+}
+
+
+
+A saída deste programa é: 
+Values of the Array: [ 1 3 4 5 1 1 7 ] 
+
+Number of Ones = 3
+
+New values of the Array: [ 0 3 4 5 0 0 7]
+
+ 
+
+ 
+
+4.4. Métodos construtores
+
+ Um método construtor é um tipo especial de método que determina como um objeto é inicializado quando ele é criado. Diferente dos métodos normais, um método construtor não pode ser chamado diretamente, ao invés disto, os métodos construtores são chamados automaticamente pelo Java. No momento em que o objeto é instanciado, ou seja, quando se usa new o Java faz três coisas:
+
+   Aloca memória para o objeto; 
+   Inicializa as variáveis daquela instância do objeto; 
+   Chama o método construtor da classe. 
+  
+
+4.5. Métodos destrutores
+
+ Os métodos destrutores são chamados logo antes do ?coletor de lixo? passar e sua memória ser liberada. O métodos destrutor é chamado de finalize( ). A classe Object define um método destrutor padrão, que não faz nada. Para criar um método destrutor para suas próprias classes, basta sobrepor o método finalize ( ) com o seguinte cabeçalho:
+
+protected void finalize ( ) {
+
+        
+
+}
+
+ Dentro do método finalize, você pode colocar tudo que você precisa para fazer a limpeza do seu objeto.
+
+ 
+
+ 
+
+ blococompleto.java    messagebox.java    blococompleto.html
+
+ 
+
+    
+
+   MyRect.java   MyRect.html
+
+ 
+
+
+--------------------------------------------------------------------------------
+
+Os métodos são particularmente interessantes quando uma determinada ação deve ser repetida várias vezes no programa e não queremos escrever o mesmo código diversas vezes. 
+
+Veja a página Notas dos Alunos. 
+
+... Talvez você tenha pensado: "Nossa! Quantas contas deve ter neste código!", mas se você prestou atenção nas últimas linhas que leu já deve saber onde queremos chegar... Sim!! Usamos métodos! Assim só precisávamos chamá-los nas horas que eram utilizados sem precisar escrever tudo de novo. 
+
+Nós simplificamos um pouco o código do Applet para você poder observar com mais clareza. 
+
+
+  
+  
+
+Executando o código do applet notas da forma que lhe foi apresentado você vai observar a mensagem indicando que este código está defasado. Modifique-o da mesma maneira que fizemos com o Applet areatri de forma a eliminar este problema. Compare-o com Notas2. 
+
+  
+// exemplo 05
+
+import java.applet.*; 
+import java.awt.*; 
+import java.text.*; 
+import java.awt.event.*; 
+
+public class Notas extends Applet implements ActionListener 
+    { 
+         NumberFormat nf1 = NumberFormat.getNumberInstance(); 
+
+         Button button = new Button("Calculo"); 
+
+         //n1 Primeiro teste 
+         TextField tf11 = new TextField("7"); 
+         TextField tf12 = new TextField("7"); 
+         TextField tf13 = new TextField("7"); 
+
+         //n2 Primeira prova 
+         TextField tf21 = new TextField("7"); 
+         TextField tf22 = new TextField("7"); 
+         TextField tf23 = new TextField("7"); 
+
+         //n3 Desempenho nas aulas 
+         TextField tf31 = new TextField("10"); 
+         TextField tf32 = new TextField("7.5"); 
+         TextField tf33 = new TextField("5.0"); 
+
+         //n4 Projeto 
+         TextField tf41 = new TextField("7"); 
+         TextField tf42 = new TextField("7"); 
+         TextField tf43 = new TextField("7"); 
+
+         //n5 prova geral 
+         TextField tf51 = new TextField("0"); 
+         TextField tf52 = new TextField("0"); 
+         TextField tf53 = new TextField("0"); 
+  
+         //n6 exame 
+        TextField tf61 = new TextField("0"); 
+        TextField tf62 = new TextField("0"); 
+        TextField tf63 = new TextField("0"); 
+  
+        //nd nota da disciplina 
+        TextField tf71 = new TextField(""); 
+        TextField tf72 = new TextField(""); 
+        TextField tf73 = new TextField(""); 
+  
+        double n101,n201,n301,n401,n501,n601,nd01, 
+                    n102,n202,n302,n402,n502,n602,nd02, 
+                    n103,n203,n303,n403,n503,n603,nd03; 
+  
+         // Metodo de calculo da nota da disciplina 
+         double nota(double n1,double n2,double n3,double n4,double n5,double n6) 
+         { 
+              double mediasimples=(((n1+n2)/2)+n3+n4)/3; 
+              double prova =n5; 
+              double mediacomprova =((mediasimples+prova)/2); 
+              double exame =n6; 
+              double mediafinal = ((mediacomprova+exame)/2); 
+              if (mediasimples>=7)   return(mediasimples); 
+              else if (mediacomprova>=5)  return(mediacomprova); 
+              else return(mediafinal); 
+         } 
+  
+         public void init() 
+        { 
+              setLayout(new GridLayout(5,9)); 
+  
+              nf1.setMaximumFractionDigits(1); 
+  
+              tf31.setBackground(Color.yellow); 
+              tf32.setBackground(Color.yellow); 
+              tf33.setBackground(Color.yellow); 
+  
+              tf71.setEditable(false);tf71.setBackground(Color.yellow); 
+              tf72.setEditable(false);tf72.setBackground(Color.yellow); 
+              tf73.setEditable(false);tf73.setBackground(Color.yellow); 
+  
+              add(new Label("Nome",Label.CENTER)); 
+              add(new Label("Freq.",Label.CENTER)); 
+              add(new Label("Teste",Label.CENTER)); 
+              add(new Label("Prova",Label.CENTER)); 
+              add(new Label("N. Aula",Label.CENTER)); 
+              add(new Label("Projeto",Label.CENTER)); 
+              add(new Label("P. Geral",Label.CENTER)); 
+              add(new Label("Exame",Label.CENTER)); 
+              add(new Label("Nota",Label.CENTER)); 
+  
+              add(new Label("Rita",Label.LEFT)); 
+              add(new Label("4p 0F",Label.LEFT)); 
+              add(tf11);add(tf21);add(tf31);add(tf41); 
+              add(tf51);add(tf61);add(tf71); 
+  
+              add(new Label("Ana",Label.LEFT)); 
+              add(new Label("3p 1F",Label.LEFT)); 
+              add(tf12);add(tf22);add(tf32);add(tf42); 
+              add(tf52);add(tf62);add(tf72); 
+  
+              add(new Label("Paula",Label.LEFT)); 
+              add(new Label("2p 2F",Label.LEFT)); 
+              add(tf13);add(tf23);add(tf33);add(tf43); 
+              add(tf53);add(tf63);add(tf73); 
+
+              add(new Label()); add(new Label()); add(new Label()); 
+              add(new Label()); add(new Label()); 
+              add(button); button.addActionListener(this); 
+              add(new Label()); add(new Label()); add(new Label()); 
+        } 
+
+         public void actionPerformed(ActionEvent evt) 
+         { 
+              if (evt.getSource() == button) 
+              { 
+                   n101 = Double.valueOf(tf11.getText()).doubleValue();//teste1 
+                   n201 = Double.valueOf(tf21.getText()).doubleValue();//prova1 
+                   n301 = Double.valueOf(tf31.getText()).doubleValue();//desempenho 
+                   n401 = Double.valueOf(tf41.getText()).doubleValue();//projeto 
+                   n501 = Double.valueOf(tf51.getText()).doubleValue();//provageral 
+                   n601 = Double.valueOf(tf61.getText()).doubleValue();//exame 
+  
+                   n102 = Double.valueOf(tf12.getText()).doubleValue();//teste1 
+                   n202 = Double.valueOf(tf22.getText()).doubleValue();//prova1 
+                   n302 = Double.valueOf(tf32.getText()).doubleValue();//desempenho 
+                   n402 = Double.valueOf(tf42.getText()).doubleValue();//projeto 
+                   n502 = Double.valueOf(tf52.getText()).doubleValue();//provageral 
+                   n602 = Double.valueOf(tf62.getText()).doubleValue();//exame 
+  
+                   n103 = Double.valueOf(tf13.getText()).doubleValue();//teste1 
+                   n203 = Double.valueOf(tf23.getText()).doubleValue();//prova1 
+                   n303 = Double.valueOf(tf33.getText()).doubleValue();//desempenho 
+                   n403 = Double.valueOf(tf43.getText()).doubleValue();//projeto 
+                   n503 = Double.valueOf(tf53.getText()).doubleValue();//provageral 
+                   n603 = Double.valueOf(tf63.getText()).doubleValue();//exame 
+  
+                   // calculos 
+                   nd01 = nota(n101,n201,n301,n401,n501,n601); 
+                   nd02 = nota(n102,n202,n302,n402,n502,n602); 
+                   nd03 = nota(n103,n203,n303,n403,n503,n603); 
+  
+                   // coloca numeros como texto na caixa do resultado 
+                   tf71.setText(String.valueOf(nf1.format(nd01))); 
+                   tf72.setText(String.valueOf(nf1.format(nd02))); 
+                   tf73.setText(String.valueOf(nf1.format(nd03))); 
+            } 
+     } 
+} 

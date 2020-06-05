@@ -1,0 +1,2 @@
+javac TestaContainer.java
+java TestaContainer

@@ -1,0 +1,42 @@
+<script>
+
+// declaração de variaveis de escopo global
+var n, i;
+var vet = new Array();
+
+// entrada de dados
+n=prompt("Informe até que ponto deverá ser calculado o Fibonacci: ","");
+
+// chamada da função
+montaSequencia();
+
+// função para numeros de Fibonacci
+function montaSequencia() {
+
+	if (n <0 || n == "") {
+		// teste caso numero menor que zero ou nulo, escrever mensagem abaixo caso naum prosseguir
+		alert("Não faz sentido calcular numero de Fibonacci para valores negativos ou iguais a zero !");
+
+	} else {
+
+		// imprime o Zero na tela
+		document.write("0");
+
+		// imprime numeros de fibonacci até "N"
+		for (i=0; i < n; i++) {
+			if (i==0 || i==1) {
+				// se i menor que ou igual a 1, posições 1 e 2 do vetor recebem o numero um.
+				vet[0] = 1;
+				vet[1] = 1;
+			} else {
+				// se i maior que 1, posição atual será anterior somada a sua anterior.
+				vet[i] = vet[i-1] + vet[i-2];
+			}
+
+			// imprime na tela o resultado.
+			document.write(" " + vet[i]);
+		}
+	}
+}
+
+</script>
